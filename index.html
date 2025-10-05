@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Un Regalo Especial Para Ti</title>
+    
+    <!-- ================================================== -->
+    <!-- INFO DEFINITIVA PARA VISTAS PREVIAS (META TAGS) -->
+    <!-- ================================================== -->
+    <meta property="og:title" content="Rohayhu Celebra! - Un Regalo Digital te Espera">
+    <meta property="og:description" content="Estás por recibir una experiencia digital única y personalizada. ¡Haz clic para descubrir tu sorpresa!">
+    <meta property="og:image" content="https://i.imgur.com/8Jj5erZ.png">
+    <meta property="og:url" content="https://rohayhu-celebra-regalos.netlify.app/">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <link id="favicon" rel="icon" href="favicon_normal.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;1,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --naranja-vitalidad: #F26200;
+            --texto-blanco: #FFFFFF;
+            --fondo-turquesa: #71c2c8;
+            --acento-magenta: #B42665;
+            --acento-turquesa-oscuro: #158EA4;
+            --acento-rosa-oscuro: #9A435A;
+            --acento-verde: #6EA372;
+            --acento-naranja-tierra: #D6805F;
+            --gris-profundo: #393d41;
+        }
+        body {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            background: radial-gradient(circle, #8ad0d6, var(--fondo-turquesa ));
+            color: var(--texto-blanco); /* Cambiado a blanco para contraste */
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+            position: relative;
+        }
+        #particles-js {
+            position: fixed; width: 100%; height: 100%;
+            top: 0; left: 0; z-index: 0;
+        }
+        .container {
+            position: relative; z-index: 1;
+            width: 100%; max-width: 900px;
+            /* NUEVO DISEÑO: Fondo "Cristal de Mar" */
+            background: rgba(21, 142, 164, 0.85); /* Turquesa oscuro semitransparente */
+            border-radius: 20px;
+            padding: 30px 40px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
+        }
+        
+        #reveal-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle, #8ad0d6, var(--fondo-turquesa));
+            z-index: 100;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            cursor: pointer; transition: opacity 0.8s ease-out;
+            color: #393d41;
+        }
+        #gift-box { font-size: 100px; animation: bounce 2s infinite; }
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-30px); } 60% { transform: translateY(-15px); } }
+        #reveal-screen h2 { font-weight: 400; margin-top: 20px; }
+        #reveal-screen p { color: var(--naranja-vitalidad); font-weight: 700; margin-top: 10px; }
+
+        .logo .rohayhu { font-weight: 700; font-size: 1em; text-transform: uppercase; letter-spacing: 1.5px; }
+        .logo .celebra { font-weight: 700; font-style: italic; font-size: 2.5em; color: var(--naranja-vitalidad); text-shadow: 0 0 15px rgba(242, 98, 0, 0.7); }
+        .greeting { font-size: 1.8em; font-weight: 400; margin: 20px 0; }
+        
+        #sound-indicator { display: none; align-items: center; justify-content: center; gap: 15px; margin-bottom: 20px; background-color: var(--gris-profundo); padding: 10px; border-radius: 50px; }
+        #sound-indicator .icon { font-size: 24px; animation: sound-wave 1.5s infinite ease-in-out; }
+        #sound-indicator .text { font-weight: 700; font-size: 1.1em; }
+        @keyframes sound-wave { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
+
+        #kit-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 30px; }
+        .kit-card {
+            background-color: var(--gris-profundo);
+            border-radius: 10px; padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .kit-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+        .kit-card .icon { font-size: 40px; margin-bottom: 10px; }
+        .kit-card h3 { font-size: 1.2em; margin: 10px 0; font-weight: 700; color: var(--texto-blanco); }
+        .kit-card .actions { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
+        .kit-card .btn { display: block; padding: 10px 15px; border-radius: 50px; text-decoration: none; font-weight: 700; transition: background-color 0.2s ease; }
+        .kit-card .btn.primary { background-color: var(--naranja-vitalidad); color: var(--texto-blanco); }
+        .kit-card .btn.secondary { background-color: transparent; color: var(--texto-blanco); border: 1px solid var(--texto-blanco); }
+        
+        #modal-viewer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); z-index: 200; display: none; justify-content: center; align-items: center; padding: 20px; box-sizing: border-box; }
+        #modal-content { position: relative; width: 100%; max-width: 1100px; height: 90%; background-color: #111; border-radius: 10px; display: flex; flex-direction: column; }
+        #modal-header { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; background-color: #000; color: #fff; border-bottom: 1px solid #333; }
+        #modal-title { font-size: 1.2em; font-weight: 700; }
+        #modal-close { font-size: 24px; cursor: pointer; color: #fff; background: none; border: none; }
+        #modal-body { flex-grow: 1; background-color: #000; }
+        #modal-body iframe, #modal-body video, #modal-body audio { width: 100%; height: 100%; border: none; }
+        #modal-body audio { height: 80px; }
+
+        #simple-content-wrapper { margin: 30px 0; width: 100%; background-color: #000; border-radius: 10px; overflow: hidden; }
+        #simple-content-wrapper.video-pdf { aspect-ratio: 16 / 9; }
+        #simple-content-wrapper video, #simple-content-wrapper iframe, #simple-content-wrapper audio { width: 100%; height: 100%; border: none; }
+        
+        .sender-message { margin-top: 20px; font-style: italic; opacity: 0.8; }
+        .footer { margin-top: 40px; font-size: 0.8em; opacity: 0.6; font-weight: 400; }
+
+        /* ================================== */
+        /* NUEVO: Estilos para el Pop-up de Salida */
+        /* ================================== */
+        #exit-intent-modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.7); z-index: 300;
+            display: none; /* Oculto por defecto */
+            justify-content: center; align-items: center;
+            padding: 20px; box-sizing: border-box;
+            opacity: 0; transition: opacity 0.3s ease;
+        }
+        #exit-intent-content {
+            background: rgba(21, 142, 164, 0.95); /* Mismo fondo que el container */
+            color: var(--texto-blanco);
+            border-radius: 20px; padding: 40px;
+            text-align: center; max-width: 500px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            transform: scale(0.9); transition: transform 0.3s ease;
+        }
+        #exit-intent-content h2 { font-size: 1.8em; margin-top: 0; }
+        #exit-intent-content p { margin: 15px 0 30px 0; line-height: 1.6; }
+        .review-buttons { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        .review-btn { display: inline-flex; align-items: center; gap: 10px; padding: 12px 24px; border-radius: 50px; text-decoration: none; font-weight: 700; color: #fff; transition: transform 0.2s ease; border: none; }
+        .review-btn:hover { transform: scale(1.05); }
+        .review-btn svg { width: 20px; height: 20px; fill: #fff; }
+        .google-btn { background-color: #DB4437; }
+        .facebook-btn { background-color: #4267B2; }
+        .instagram-btn { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+        #exit-intent-close { position: absolute; top: 15px; right: 15px; font-size: 24px; color: #fff; cursor: pointer; background: none; border: none; }
+    </style>
+</head>
+<body>
+    <div id="reveal-screen">
+        <div id="gift-box">🎁</div>
+        <h2>Digital. Único. Tuyo.</h2>
+        <p>Haz clic para abrir tu regalo</p>
+    </div>
+    <div id="particles-js"></div>
+    <div class="container">
+        <div class="logo">
+            <div class="rohayhu">ROHAYHU</div>
+            <div class="celebra">Celebra!</div>
+        </div>
+        <h1 id="greeting" class="greeting"></h1>
+        <p id="sender-message" class="sender-message"></p>
+        <div id="sound-indicator">
+            <div class="icon">🔊</div>
+            <div class="text">¡Sube el volumen!</div>
+        </div>
+        <div id="simple-content-wrapper"></div>
+        <a id="simple-download-button" class="kit-card btn primary" style="display:none; max-width: 250px; margin: 20px auto;" href="#" download>Descargar mi Regalo</a>
+        <div id="kit-gallery"></div>
+        <div class="footer">Powered by NEURACOR</div>
+    </div>
+    
+    <!-- Modal para visualizar el contenido del kit -->
+    <div id="modal-viewer">
+        <div id="modal-content">
+            <div id="modal-header">
+                <h2 id="modal-title"></h2>
+                <button id="modal-close">&times;</button>
+            </div>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <!-- ================================== -->
+    <!-- NUEVO: Pop-up de Salida para Reseñas -->
+    <!-- ================================== -->
+    <div id="exit-intent-modal">
+        <div id="exit-intent-content">
+            <button id="exit-intent-close">&times;</button>
+            <h2>¡Un momentito! Antes de irte...</h2>
+            <p>Nos encantaría saber tu opinión sobre el regalo que recibiste. ¡Tu reseña es un tesoro para nosotros y ayuda a que otros descubran la magia de un regalo que late!</p>
+            <div class="review-buttons">
+                <a href="https://g.page/r/Ccp_2cFD8IiWEBM/review" target="_blank" class="review-btn google-btn">
+                    <svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/><path d="M1 1h22v22H1z" fill="none"/></svg>
+                    Opinar en Google
+                </a>
+                <a href="https://www.facebook.com/RohayhuRegaleria/reviews/?ref=page_internal" target="_blank" class="review-btn facebook-btn">
+                    <svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-1.5c-.83 0-1 .17-1 .83V12h2.5l-.5 3H13v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
+                    Dejar reseña en Facebook
+                </a>
+                <a href="https://www.instagram.com/rohayhuregaleria/" target="_blank" class="review-btn instagram-btn">
+                    <svg viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8A3.6 3.6 0 0 0 7.6 20h8.8A3.6 3.6 0 0 0 20 16.4V7.6A3.6 3.6 0 0 0 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg>
+                    Seguirnos en Instagram y mencionarnos en tus historias
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // --- Favicon Animation ---
+        const favicons = ['favicon_normal.png', 'favicon_latido.png'];
+        let currentFaviconFrame = 0;
+        const faviconElement = document.getElementById('favicon' );
+        setInterval(() => {
+            faviconElement.href = favicons[currentFaviconFrame];
+            currentFaviconFrame = (currentFaviconFrame + 1) % favicons.length;
+        }, 500);
+
+        // --- Particles.js con Paleta Festiva y SIN LÍNEAS ---
+        particlesJS("particles-js", {
+            particles: {
+                number: { value: 50, density: { enable: true, value_area: 800 } },
+                color: { value: ["#B42665", "#9A435A", "#6EA372", "#D6805F", "#F26200"] },
+                shape: { type: "circle" },
+                opacity: { value: 0.8, random: true },
+                size: { value: 5, random: true },
+                line_linked: { enable: false },
+                move: { enable: true, speed: 2, direction: "none", random: true, straight: false, out_mode: "out" }
+            },
+            interactivity: { detect_on: "canvas", events: { onhover: { enable: true, mode: "bubble" } }, modes: { bubble: { distance: 200, size: 8, duration: 2, opacity: 1 } } },
+            retina_detect: true
+        });
+
+        // --- Lógica Principal ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const revealScreen = document.getElementById('reveal-screen');
+            const container = document.querySelector('.container');
+            container.style.display = 'none';
+            revealScreen.addEventListener('click', () => {
+                revealScreen.style.opacity = '0';
+                setTimeout(() => {
+                    revealScreen.style.display = 'none';
+                    container.style.display = 'block';
+                    loadContent();
+                }, 800);
+            });
+            function loadContent() {
+                const params = new URLSearchParams(window.location.search);
+                const isKit = params.get('kit') === 'true';
+                const nombre = params.get('nombre');
+                const remitente = params.get('remitente');
+                document.getElementById('greeting').textContent = nombre ? `Un regalo para ${nombre}` : '¡Tienes una sorpresa!';
+                document.title = nombre ? `Un Regalo para ${nombre}` : 'Un Regalo Especial';
+                if (remitente) document.getElementById('sender-message').textContent = `De parte de ${remitente}.`;
+                if (isKit) { loadKitContent(params); } else { loadSimpleContent(params); }
+            }
+            function loadSimpleContent(params) {
+                const tipo = params.get('tipo');
+                const url = params.get('url');
+                const contentWrapperEl = document.getElementById('simple-content-wrapper');
+                const downloadButtonEl = document.getElementById('simple-download-button');
+                if (url) {
+                    let contentHtml = '';
+                    contentWrapperEl.className = 'simple-content-wrapper';
+                    if (tipo === 'video' || tipo === 'pdf') contentWrapperEl.classList.add('video-pdf');
+                    if (tipo === 'audio') document.getElementById('sound-indicator').style.display = 'flex';
+                    switch (tipo) {
+                        case 'video': contentHtml = `<iframe src="${url}" allowfullscreen></iframe>`; break;
+                        case 'audio': contentHtml = `<iframe src="${url}"></iframe>`; break;
+                        case 'pdf': contentHtml = `<iframe src="${url}"></iframe>`; break;
+                        case 'link': window.open(url, '_blank'); return;
+                        default: contentHtml = '<p>El contenido de tu regalo aparecerá aquí.</p>';
+                    }
+                    contentWrapperEl.innerHTML = contentHtml;
+                    // Para el botón de descarga, extraer el ID y usar formato de descarga
+                    if (url.includes('drive.google.com/file/d/')) {
+                        const match = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+                        if (match) {
+                            const driveId = match[1];
+                            downloadButtonEl.href = `https://drive.google.com/uc?export=download&id=${driveId}`;
+                            downloadButtonEl.style.display = 'block';
+                        }
+                    } else {
+                        downloadButtonEl.href = url;
+                        downloadButtonEl.style.display = 'block';
+                    }
+                } else {
+                    contentWrapperEl.innerHTML = '<p style="padding-top: 20px;">Contenido no encontrado.</p>';
+                    downloadButtonEl.style.display = 'none';
+                }
+            }
+            function loadKitContent(params) {
+                const kitGalleryEl = document.getElementById('kit-gallery');
+                const items = [];
+                for (let i = 1; i <= 10; i++) {
+                    const tipo = params.get(`tipo${i}`);
+                    const url = params.get(`url${i}`);
+                    if (tipo && url) items.push({ tipo, url, numero: i });
+                }
+                if (items.length === 0) {
+                    kitGalleryEl.innerHTML = '<p>No se encontraron elementos en este kit.</p>';
+                    return;
+                }
+                kitGalleryEl.innerHTML = items.map(item => {
+                    const iconos = { video: '🎬', audio: '🎵', pdf: '📄', link: '🔗' };
+                    const nombres = { video: 'Video', audio: 'Audio', pdf: 'Documento', link: 'Enlace' };
+                    
+                    // Para el botón de descarga, extraer el ID si es de Google Drive
+                    let downloadUrl = item.url;
+                    if (item.url.includes('drive.google.com/file/d/')) {
+                        const match = item.url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+                        if (match) {
+                            const driveId = match[1];
+                            downloadUrl = `https://drive.google.com/uc?export=download&id=${driveId}`;
+                        }
+                    }
+                    
+                    return `
+                        <div class="kit-card">
+                            <div class="icon">${iconos[item.tipo] || '📦'}</div>
+                            <h3>Regalo #${item.numero}</h3>
+                            <p>${nombres[item.tipo] || 'Contenido'}</p>
+                            <div class="actions">
+                                <a href="#" class="btn primary" onclick="openModal('${item.tipo}', '${item.url}', 'Regalo #${item.numero}')">Ver / Escuchar</a>
+                                <a href="${downloadUrl}" class="btn secondary" download>Descargar</a>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+            window.openModal = function(tipo, url, titulo) {
+                const modal = document.getElementById('modal-viewer');
+                const modalTitle = document.getElementById('modal-title');
+                const modalBody = document.getElementById('modal-body');
+                modalTitle.textContent = titulo;
+                if (tipo === 'link') { window.open(url, '_blank'); return; }
+                let contentHtml = '';
+                switch (tipo) {
+                    case 'video': contentHtml = `<iframe src="${url}" allowfullscreen></iframe>`; break;
+                    case 'audio': contentHtml = `<iframe src="${url}"></iframe>`; break;
+                    case 'pdf': contentHtml = `<iframe src="${url}"></iframe>`; break;
+                    default: contentHtml = '<p>Contenido no disponible.</p>';
+                }
+                modalBody.innerHTML = contentHtml;
+                modal.style.display = 'flex';
+            };
+            document.getElementById('modal-close').addEventListener('click', () => {
+                document.getElementById('modal-viewer').style.display = 'none';
+            });
+        });
+
+        // --- Pop-up de Salida ---
+        let exitIntentShown = false;
+        function showExitIntent() {
+            if (!exitIntentShown) {
+                const modal = document.getElementById('exit-intent-modal');
+                const content = document.getElementById('exit-intent-content');
+                modal.style.display = 'flex';
+                setTimeout(() => {
+                    modal.style.opacity = '1';
+                    content.style.transform = 'scale(1)';
+                }, 10);
+                exitIntentShown = true;
+            }
+        }
+        function hideExitIntent() {
+            const modal = document.getElementById('exit-intent-modal');
+            modal.style.opacity = '0';
+            setTimeout(() => modal.style.display = 'none', 300);
+        }
+        document.addEventListener('mouseleave', showExitIntent);
+        document.getElementById('exit-intent-close').addEventListener('click', hideExitIntent);
+        document.querySelectorAll('.review-btn').forEach(btn => {
+            btn.addEventListener('click', hideExitIntent);
+        });
+    </script>
+</body>
+</html>
