@@ -29,7 +29,7 @@ def send_gift():
                 }), 400
         
         # Clave API de SendGrid (en un entorno de producción, esto debería estar en variables de entorno)      
-	sg = sendgrid.SendGridAPIClient(api_key=os.environ.get('SENDGRID_API_KEY'))
+    sg = sendgrid.SendGridAPIClient(api_key=os.environ.get('SENDGRID_API_KEY'))
 
         
         # Enviar el correo
