@@ -2,6 +2,7 @@ import os
 import sendgrid  # <-- ¡IMPORTANTE! Esta línea faltaba
 from flask import Blueprint, request, jsonify
 from src.email_service import send_gift_email
+from src.models import db, Gift # <-- Importación más limpia gracias a __init__.py
 
 gift_bp = Blueprint('gift', __name__)
 
