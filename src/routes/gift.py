@@ -1,5 +1,5 @@
 import os
-
+import sendgrid  # <-- ¡IMPORTANTE! Esta línea faltaba
 from flask import Blueprint, request, jsonify
 from src.email_service import send_gift_email
 
@@ -19,7 +19,7 @@ def send_gift():
     try:
         data = request.get_json()
         
-        # Validar que todos los campos requeridos estén presentes
+        # 1. Validar que todos los campos requeridos estén presentes
         required_fields = ['recipient_name', 'recipient_email', 'sender_name', 'gift_url']
         for field in required_fields:
             if not data.get(field):
@@ -28,11 +28,13 @@ def send_gift():
                     'message': f'El campo {field} es requerido'
                 }), 400
         
-        # Clave API de SendGrid (en un entorno de producción, esto debería estar en variables de entorno)      
-    sg = sendgrid.SendGridAPIClient(api_key=os.environ.get('SENDGRID_API_KEY'))
+        # 2. Obtener la clave API de las variables de entorno
+        sendgrid_api_key = os.environ.get('SENDGRID_API_KEY')
+        if not sendgrid_api_key:
+            # Si la clave no está configurada, falla con un error claro
+            raise ValueError("La clave de API de SendGrid (SENDGRID_API_KEY) no está configurada en el servidor.")
 
-        
-        # Enviar el correo
+        # 3. Enviar el correo (toda la lógica peligrosa está DENTRO del try)
         result = send_gift_email(
             recipient_name=data['recipient_name'],
             recipient_email=data['recipient_email'],
@@ -41,12 +43,16 @@ def send_gift():
             sendgrid_api_key=sendgrid_api_key
         )
         
+        # 4. Devolver el resultado
         if result['success']:
             return jsonify(result), 200
         else:
+            # Si send_gift_email reportó un fallo, lo pasamos al cliente
             return jsonify(result), 500
             
     except Exception as e:
+        # Si cualquier cosa en el bloque 'try' falla, este 'except' lo atrapará
+        print(f"Error en /send-gift: {str(e)}") # Imprime el error en los logs de Render para depuración
         return jsonify({
             'success': False,
             'message': f'Error interno del servidor: {str(e)}'
