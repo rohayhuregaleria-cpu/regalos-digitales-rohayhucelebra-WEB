@@ -5,6 +5,7 @@ Rohayhu Celebra! - Dashboard Integrado
 
 from flask import Blueprint, request, jsonify
 from src.link_generator import LinkGenerator
+from src.url_shortener import URLShortener
 
 link_bp = Blueprint('link', __name__)
 
@@ -13,18 +14,6 @@ link_bp = Blueprint('link', __name__)
 def generate_link():
     """
     Genera un enlace de regalo personalizado
-    
-    Expected JSON payload:
-    {
-        "recipient_name": "María González",
-        "is_kit": false,
-        "items": [
-            {
-                "type": "video",
-                "url": "https://drive.google.com/file/d/1ABC123/view"
-            }
-        ]
-    }
     """
     try:
         data = request.get_json()
@@ -40,7 +29,6 @@ def generate_link():
         is_kit = data.get('is_kit', False)
         items = data.get('items', [])
         
-        # Generar el enlace usando el servicio
         result = LinkGenerator.generate_gift_link(
             recipient_name=recipient_name,
             items=items,
@@ -83,11 +71,6 @@ def get_item_types():
 def validate_drive_url():
     """
     Valida una URL de Google Drive y extrae el ID
-    
-    Expected JSON payload:
-    {
-        "url": "https://drive.google.com/file/d/1ABC123/view"
-    }
     """
     try:
         data = request.get_json()
@@ -124,5 +107,50 @@ def validate_drive_url():
     except Exception as e:
         return jsonify({
             "success": False,
+            "message": f"Error interno del servidor: {str(e)}"
+        }), 500
+
+
+
+@link_bp.route('/shorten-url', methods=['POST'])
+def shorten_url():
+    """
+    Acorta una URL usando TinyURL
+    """
+    try:
+        data = request.get_json()
+        
+        if not data:
+            return jsonify({
+                "success": False,
+                "short_url": "",
+                "message": "No se recibieron datos"
+            }), 400
+        
+        long_url = data.get('url', '').strip()
+        recipient_name = data.get('recipient_name', '').strip()
+        
+        if not long_url:
+            return jsonify({
+                "success": False,
+                "short_url": "",
+                "message": "URL no puede estar vacía"
+            }), 400
+        
+        alias = None
+        if recipient_name:
+            alias = URLShortener.create_gift_alias(recipient_name)
+        
+        result = URLShortener.shorten_url(long_url, alias)
+        
+        if result['success']:
+            return jsonify(result), 200
+        else:
+            return jsonify(result), 200
+            
+    except Exception as e:
+        return jsonify({
+            "success": False,
+            "short_url": "",
             "message": f"Error interno del servidor: {str(e)}"
         }), 500

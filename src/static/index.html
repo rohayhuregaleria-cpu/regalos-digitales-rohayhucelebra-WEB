@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <!-- FIX: Ruta relativa para el favicon -->
     <link rel="icon" type="image/png" href="favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Rohayhu Celebra! - Completo</title>
@@ -180,14 +181,10 @@
                         </small>
                     </div>
                     
-                    <!-- ================================================== -->
-                    <!-- PASO 4.1: NUEVO CAMPO DE TEXTO AÑADIDO AQUÍ -->
-                    <!-- ================================================== -->
                     <div class="form-group">
                         <label for="order-id">Número de Pedido (Opcional)</label>
                         <input type="text" id="order-id" name="order_id" placeholder="Ej: PED-00123">
                     </div>
-                    <!-- ================================================== -->
 
                     <button type="submit" class="action-button" id="send-button">
                         <span class="icon">🚀</span>Enviar Regalo Mágico
@@ -254,6 +251,7 @@
             e.preventDefault();
             const generateButton = document.getElementById('generate-button');
             const resultSection = document.getElementById('generator-result');
+            
             const recipientName = document.getElementById('recipient-name-gen').value;
             const isKit = document.getElementById('is-kit').checked;
             const items = Array.from(document.querySelectorAll('#items-container .item')).map(item => ({
@@ -271,27 +269,32 @@
             resultSection.style.display = 'none';
 
             try {
-                const baseURL = "https://rohayhu-celebra-regalos.netlify.app/";
-                const params = new URLSearchParams( );
-                params.append('nombre', recipientName);
-                params.append('remitente', "Rohayhu Celebra!"); // Remitente genérico para el enlace
-                params.append('kit', isKit);
-                items.forEach((item, index) => {
-                    params.append(`tipo${index + 1}`, item.type);
-                    params.append(`url${index + 1}`, item.url);
+                const response = await fetch(`${API_BASE_URL}/generate-link`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        recipient_name: recipientName,
+                        is_kit: isKit,
+                        items: items
+                    })
                 });
-
-                generatedLink = `${baseURL}?${params.toString()}`;
                 
-                showResult('generator', 'success', '🎉 ¡Enlace generado exitosamente!', `
-                    <div style="margin-bottom: 15px;">El enlace para <strong>${recipientName}</strong> está listo:</div>
-                    <div class="generated-link">${generatedLink}</div>
-                    <button class="copy-button" onclick="copyGeneratedLink()">📋 Copiar Enlace</button>
-                    <button class="copy-button" onclick="useInSender()" style="margin-left: 10px;">📧 Usar para Enviar</button>
-                `);
-
+                const result = await response.json();
+                
+                if (result.success) {
+                    generatedLink = result.url;
+                    showResult('generator', 'success', '🎉 ¡Enlace generado exitosamente!', `
+                        <div style="margin-bottom: 15px;">El enlace para <strong>${recipientName}</strong> está listo:</div>
+                        <div class="generated-link">${result.url}</div>
+                        <button class="copy-button" onclick="copyGeneratedLink()">📋 Copiar Enlace Acortado</button>
+                        <button class="copy-button" onclick="useInSender()" style="margin-left: 10px;">📧 Usar para Enviar</button>
+                    `);
+                } else {
+                    showResult('generator', 'error', '❌ Error al generar enlace', result.message);
+                }
+                
             } catch (error) {
-                showResult('generator', 'error', '❌ Error inesperado', 'Ocurrió un error al construir el enlace.');
+                showResult('generator', 'error', '❌ Error de conexión', 'No se pudo conectar con el servidor. Por favor, intenta nuevamente.');
             } finally {
                 generateButton.disabled = false;
                 generateButton.innerHTML = '<span class="icon">✨</span>Generar Enlace Mágico';
@@ -304,12 +307,7 @@
             const sendButton = document.getElementById('send-button');
             const resultSection = document.getElementById('sender-result');
             
-            // ====================================================================
-            // PASO 4.2 (MODIFICADO): Leer el valor del nuevo campo "order-id"
-            // ====================================================================
             const orderId = document.getElementById('order-id').value.trim();
-
-            // Construir el objeto de datos
             const giftData = {
                 recipient_name: document.getElementById('recipient-name-send').value,
                 recipient_email: document.getElementById('recipient-email').value,
@@ -317,9 +315,6 @@
                 gift_url: document.getElementById('gift-url').value
             };
 
-            // ====================================================================
-            // PASO 4.3 (MODIFICADO): Añadir el order_id al objeto solo si tiene un valor
-            // ====================================================================
             if (orderId) {
                 giftData.order_id = orderId;
             }
@@ -368,13 +363,38 @@
             `;
         }
 
-        function copyGeneratedLink() {
+        async function copyGeneratedLink() {
             if (generatedLink) {
-                navigator.clipboard.writeText(generatedLink).then(() => {
-                    alert('¡Enlace copiado al portapapeles!');
-                }, () => {
-                    alert('Error al copiar el enlace. Por favor, cópialo manualmente.');
-                });
+                try {
+                    const recipientName = document.getElementById('recipient-name-gen').value;
+                    const shortenResponse = await fetch(`${API_BASE_URL}/shorten-url`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            url: generatedLink,
+                            recipient_name: recipientName
+                        })
+                    });
+                    
+                    const shortenResult = await shortenResponse.json();
+                    const urlToCopy = shortenResult.success ? shortenResult.short_url : generatedLink;
+                    
+                    navigator.clipboard.writeText(urlToCopy).then(() => {
+                        const message = shortenResult.success 
+                            ? '¡Enlace acortado y copiado al portapapeles!' 
+                            : '¡Enlace original copiado al portapapeles!';
+                        alert(message);
+                    }, () => {
+                        alert('Error al copiar el enlace. Por favor, cópialo manually.');
+                    });
+                    
+                } catch (error) {
+                    navigator.clipboard.writeText(generatedLink).then(() => {
+                        alert('Error al acortar, ¡enlace original copiado al portapapeles!');
+                    }, () => {
+                        alert('Error al copiar el enlace. Por favor, cópialo manualmente.');
+                    });
+                }
             }
         }
 
