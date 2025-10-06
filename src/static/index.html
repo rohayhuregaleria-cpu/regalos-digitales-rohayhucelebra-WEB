@@ -2,8 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <!-- FIX: Ruta relativa para el favicon -->
-    <link rel="icon" type="image/png" href="favicon.ico" />
+    <link rel="icon" type="image/png" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Rohayhu Celebra! - Completo</title>
     <style>
@@ -15,7 +14,13 @@
             --verde-armonia: #59a068;
             --texto-blanco: #FFFFFF;
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, var(--gris-profundo) 0%, #2c3e50 100%);
@@ -23,75 +28,355 @@
             min-height: 100vh;
             padding: 20px;
         }
+
         .container {
-            max-width: 1200px; margin: 0 auto; background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px; padding: 40px; backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
-        .header { text-align: center; margin-bottom: 40px; }
-        .logo { margin-bottom: 20px; }
-        .rohayhu { font-weight: 700; font-size: 1.2em; text-transform: uppercase; letter-spacing: 2px; color: var(--texto-blanco); }
-        .celebra { font-weight: 700; font-style: italic; font-size: 3em; color: var(--naranja-vitalidad); text-shadow: 0 0 20px var(--naranja-vitalidad); margin-top: -10px; }
-        .subtitle { font-size: 1.1em; opacity: 0.8; margin-top: 10px; }
-        .tabs { display: flex; margin-bottom: 30px; background: rgba(255, 255, 255, 0.1); border-radius: 15px; padding: 5px; }
-        .tab { flex: 1; padding: 15px 20px; text-align: center; border-radius: 10px; cursor: pointer; transition: all 0.3s ease; font-weight: 600; border: none; background: transparent; color: var(--texto-blanco); }
-        .tab.active { background: linear-gradient(45deg, var(--naranja-vitalidad), var(--magenta)); box-shadow: 0 5px 15px rgba(242, 98, 0, 0.3); }
-        .tab:hover:not(.active) { background: rgba(255, 255, 255, 0.1); }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-        .form-section { background: var(--gris-profundo); border-radius: 15px; padding: 30px; margin-bottom: 30px; border: 1px solid rgba(255, 255, 255, 0.1); }
-        .form-group { margin-bottom: 25px; }
-        label { display: block; font-weight: 600; margin-bottom: 8px; color: var(--turquesa); font-size: 1.1em; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            margin-bottom: 20px;
+        }
+
+        .rohayhu {
+            font-weight: 700;
+            font-size: 1.2em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--texto-blanco);
+        }
+
+        .celebra {
+            font-weight: 700;
+            font-style: italic;
+            font-size: 3em;
+            color: var(--naranja-vitalidad);
+            text-shadow: 0 0 20px var(--naranja-vitalidad);
+            margin-top: -10px;
+        }
+
+        .subtitle {
+            font-size: 1.1em;
+            opacity: 0.8;
+            margin-top: 10px;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 5px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 15px 20px;
+            text-align: center;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            border: none;
+            background: transparent;
+            color: var(--texto-blanco);
+        }
+
+        .tab.active {
+            background: linear-gradient(45deg, var(--naranja-vitalidad), var(--magenta));
+            box-shadow: 0 5px 15px rgba(242, 98, 0, 0.3);
+        }
+
+        .tab:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .form-section {
+            background: var(--gris-profundo);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--turquesa);
+            font-size: 1.1em;
+        }
+
         input[type="text"], input[type="email"], input[type="url"], select {
-            width: 100%; padding: 15px; border: 2px solid rgba(255, 255, 255, 0.2);
-            border-radius: 10px; background: var(--gris-profundo); color: var(--texto-blanco);
-            font-size: 1em; transition: all 0.3s ease;
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            background: var(--gris-profundo);
+            color: var(--texto-blanco);
+            font-size: 1em;
+            transition: all 0.3s ease;
         }
+
         input[type="text"]:focus, input[type="email"]:focus, input[type="url"]:focus, select:focus {
-            outline: none; border-color: var(--naranja-vitalidad); background: rgba(255, 255, 255, 0.15);
+            outline: none;
+            border-color: var(--naranja-vitalidad);
+            background: rgba(255, 255, 255, 0.15);
             box-shadow: 0 0 15px rgba(242, 98, 0, 0.3);
         }
-        input::placeholder { color: rgba(255, 255, 255, 0.6); }
-        .checkbox-group { display: flex; align-items: center; gap: 15px; background: var(--gris-profundo); padding: 15px; border-radius: 10px; }
-        .checkbox-group input[type="checkbox"] { width: auto; transform: scale(1.5); }
-        .items-controls { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
-        .add-item-btn { padding: 10px 15px; background: var(--verde-armonia); color: var(--texto-blanco); border: none; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; }
-        .add-item-btn:hover { background: #4a8a57; transform: translateY(-2px); }
-        .item { display: flex; gap: 15px; align-items: center; margin-bottom: 15px; padding: 15px; background: var(--gris-profundo); border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.2); }
-        .item-label { font-weight: bold; color: var(--naranja-vitalidad); min-width: 80px; }
-        .item input { flex: 1; margin: 0; }
-        .remove-item-btn { background: var(--magenta); color: var(--texto-blanco); border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; }
-        .remove-item-btn:hover { background: #a8325f; }
-        .action-button {
-            width: 100%; padding: 18px; font-size: 1.2em; font-weight: bold;
-            background: linear-gradient(45deg, var(--naranja-vitalidad), var(--magenta));
-            color: var(--texto-blanco); border: none; border-radius: 15px; cursor: pointer;
-            transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1px;
-            position: relative; overflow: hidden;
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
         }
-        .action-button:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(242, 98, 0, 0.4); }
-        .action-button:active { transform: translateY(-1px); }
-        .action-button:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
-        .result-section { margin-top: 30px; padding: 20px; border-radius: 15px; border: 2px solid; display: none; }
-        .result-success { background: rgba(89, 160, 104, 0.2); border-color: var(--verde-armonia); color: var(--verde-armonia); }
-        .result-error { background: rgba(203, 61, 121, 0.2); border-color: var(--magenta); color: var(--magenta); }
-        .result-info { background: rgba(9, 134, 155, 0.2); border-color: var(--turquesa); color: var(--turquesa); }
-        .loading { display: inline-block; width: 20px; height: 20px; border: 3px solid rgba(255, 255, 255, 0.3); border-radius: 50%; border-top-color: var(--texto-blanco); animation: spin 1s ease-in-out infinite; margin-right: 10px; }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        .icon { font-size: 1.5em; margin-right: 10px; }
-        .health-check { text-align: center; margin-bottom: 20px; }
-        .health-button { background: var(--turquesa); color: var(--texto-blanco); border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 0.9em; transition: all 0.3s ease; }
-        .health-button:hover { background: #0a7a8a; transform: translateY(-2px); }
-        .generated-link { word-wrap: break-word; font-family: 'Courier New', Courier, monospace; background: var(--gris-profundo); padding: 15px; border-radius: 10px; border: 2px dashed var(--turquesa); margin: 15px 0; }
-        .copy-button { background: var(--turquesa); color: var(--texto-blanco); border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; }
-        .copy-button:hover { background: #0a7a8a; transform: translateY(-2px); }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: var(--gris-profundo);
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            transform: scale(1.5);
+        }
+
+        .items-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .add-item-btn {
+            padding: 10px 15px;
+            background: var(--verde-armonia);
+            color: var(--texto-blanco);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .add-item-btn:hover {
+            background: #4a8a57;
+            transform: translateY(-2px);
+        }
+
+        .item {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: var(--gris-profundo);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .item-label {
+            font-weight: bold;
+            color: var(--naranja-vitalidad);
+            min-width: 80px;
+        }
+
+        .item input {
+            flex: 1;
+            margin: 0;
+        }
+
+        .remove-item-btn {
+            background: var(--magenta);
+            color: var(--texto-blanco);
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .remove-item-btn:hover {
+            background: #a8325f;
+        }
+
+        .action-button {
+            width: 100%;
+            padding: 18px;
+            font-size: 1.2em;
+            font-weight: bold;
+            background: linear-gradient(45deg, var(--naranja-vitalidad), var(--magenta));
+            color: var(--texto-blanco);
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .action-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(242, 98, 0, 0.4);
+        }
+
+        .action-button:active {
+            transform: translateY(-1px);
+        }
+
+        .action-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .result-section {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid;
+            display: none;
+        }
+
+        .result-success {
+            background: rgba(89, 160, 104, 0.2);
+            border-color: var(--verde-armonia);
+            color: var(--verde-armonia);
+        }
+
+        .result-error {
+            background: rgba(203, 61, 121, 0.2);
+            border-color: var(--magenta);
+            color: var(--magenta);
+        }
+
+        .result-info {
+            background: rgba(9, 134, 155, 0.2);
+            border-color: var(--turquesa);
+            color: var(--turquesa);
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--texto-blanco);
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .icon {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+
+        .health-check {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .health-button {
+            background: var(--turquesa);
+            color: var(--texto-blanco);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+
+        .health-button:hover {
+            background: #0a7a8a;
+            transform: translateY(-2px);
+        }
+
+        .generated-link {
+            word-wrap: break-word;
+            font-family: 'Courier New', Courier, monospace;
+            background: var(--gris-profundo);
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px dashed var(--turquesa);
+            margin: 15px 0;
+        }
+
+        .copy-button {
+            background: var(--turquesa);
+            color: var(--texto-blanco);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .copy-button:hover {
+            background: #0a7a8a;
+            transform: translateY(-2px);
+        }
+
         @media (max-width: 768px) {
-            .container { padding: 20px; margin: 10px; }
-            .celebra { font-size: 2.5em; }
-            .tabs { flex-direction: column; }
-            .items-controls { flex-direction: column; }
-            .item { flex-direction: column; align-items: stretch; }
-            .item-label { min-width: auto; }
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            
+            .celebra {
+                font-size: 2.5em;
+            }
+
+            .tabs {
+                flex-direction: column;
+            }
+
+            .items-controls {
+                flex-direction: column;
+            }
+
+            .item {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .item-label {
+                min-width: auto;
+            }
         }
     </style>
 </head>
@@ -125,17 +410,20 @@
                 <h2 style="margin-bottom: 25px; color: var(--naranja-vitalidad);">
                     <span class="icon">🔗</span>Generador de Enlaces de Regalo
                 </h2>
+                
                 <form id="generator-form">
                     <div class="form-group">
                         <label for="recipient-name-gen">Nombre del Receptor</label>
                         <input type="text" id="recipient-name-gen" name="recipient_name" placeholder="Ej: Ana Pérez" required>
                     </div>
+
                     <div class="form-group">
                         <div class="checkbox-group">
                             <label for="is-kit">¿Es un Kit de Recuerdos?</label>
                             <input type="checkbox" id="is-kit" name="is_kit">
                         </div>
                     </div>
+
                     <div class="form-group">
                         <label>Componentes del Regalo</label>
                         <div class="items-controls">
@@ -143,15 +431,20 @@
                             <button type="button" class="add-item-btn" onclick="addItem('audio')">Añadir Audio</button>
                             <button type="button" class="add-item-btn" onclick="addItem('pdf')">Añadir PDF</button>
                             <button type="button" class="add-item-btn" onclick="addItem('link')">Añadir Link</button>
+                            <button type="button" class="add-item-btn" onclick="addItem('storybook')">Añadir Storybook</button>
                         </div>
                         <div id="items-container"></div>
                     </div>
+
                     <button type="submit" class="action-button" id="generate-button">
                         <span class="icon">✨</span>Generar Enlace Mágico
                     </button>
                 </form>
             </div>
-            <div id="generator-result" class="result-section"></div>
+
+            <div id="generator-result" class="result-section">
+                <div id="generator-result-content"></div>
+            </div>
         </div>
 
         <!-- Tab: Envío de Regalos -->
@@ -160,19 +453,23 @@
                 <h2 style="margin-bottom: 25px; color: var(--naranja-vitalidad);">
                     <span class="icon">🎁</span>Enviar Regalo Digital
                 </h2>
+                
                 <form id="sender-form">
                     <div class="form-group">
                         <label for="recipient-name-send">Nombre del Destinatario</label>
                         <input type="text" id="recipient-name-send" name="recipient_name" placeholder="Ej: Ana Pérez" required>
                     </div>
+
                     <div class="form-group">
                         <label for="recipient-email">Email del Destinatario</label>
                         <input type="email" id="recipient-email" name="recipient_email" placeholder="ana.perez@ejemplo.com" required>
                     </div>
+
                     <div class="form-group">
                         <label for="sender-name">Nombre del Remitente</label>
                         <input type="text" id="sender-name" name="sender_name" placeholder="Tu nombre" required>
                     </div>
+
                     <div class="form-group">
                         <label for="gift-url">URL del Regalo</label>
                         <input type="url" id="gift-url" name="gift_url" placeholder="Pega aquí el enlace generado o uno personalizado" required>
@@ -180,18 +477,16 @@
                             💡 Puedes usar un enlace generado en la pestaña anterior o pegar uno personalizado
                         </small>
                     </div>
-                    
-                    <div class="form-group">
-                        <label for="order-id">Número de Pedido (Opcional)</label>
-                        <input type="text" id="order-id" name="order_id" placeholder="Ej: PED-00123">
-                    </div>
 
                     <button type="submit" class="action-button" id="send-button">
                         <span class="icon">🚀</span>Enviar Regalo Mágico
                     </button>
                 </form>
             </div>
-            <div id="sender-result" class="result-section"></div>
+
+            <div id="sender-result" class="result-section">
+                <div id="sender-result-content"></div>
+            </div>
         </div>
     </div>
 
@@ -201,8 +496,12 @@
 
         // Gestión de pestañas
         function switchTab(tabName) {
-            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
             document.getElementById(tabName + '-tab').classList.add('active');
             event.currentTarget.classList.add('active');
         }
@@ -212,13 +511,12 @@
             const healthResult = document.getElementById('health-result');
             try {
                 const response = await fetch(`${API_BASE_URL}/health`);
-                if (!response.ok) throw new Error('Respuesta no válida del servidor');
                 const data = await response.json();
                 
                 if (data.success) {
                     healthResult.innerHTML = '<div style="color: var(--verde-armonia); margin-top: 10px;">✅ Sistema funcionando correctamente</div>';
                 } else {
-                    healthResult.innerHTML = `<div style="color: var(--magenta); margin-top: 10px;">❌ Error en el sistema: ${data.message}</div>`;
+                    healthResult.innerHTML = '<div style="color: var(--magenta); margin-top: 10px;">❌ Error en el sistema</div>';
                 }
             } catch (error) {
                 healthResult.innerHTML = '<div style="color: var(--magenta); margin-top: 10px;">❌ No se pudo conectar con el servidor</div>';
@@ -231,63 +529,96 @@
             const itemDiv = document.createElement('div');
             itemDiv.className = 'item';
             itemDiv.dataset.type = type;
+
             const itemTypes = {
                 'video': { label: 'VIDEO', placeholder: 'Pega el enlace para compartir de Google Drive' },
                 'audio': { label: 'AUDIO', placeholder: 'Pega el enlace para compartir de Google Drive' },
                 'pdf': { label: 'PDF', placeholder: 'Pega el enlace para compartir de Google Drive' },
-                'link': { label: 'LINK', placeholder: 'Pega la URL completa del enlace externo' }
+                'link': { label: 'LINK', placeholder: 'Pega la URL completa del enlace externo' },
+                'storybook': { label: 'STORYBOOK', placeholder: 'Pega la URL completa del storybook' }
             };
+
             const itemInfo = itemTypes[type];
+
             itemDiv.innerHTML = `
                 <div class="item-label">${itemInfo.label}:</div>
                 <input type="text" placeholder="${itemInfo.placeholder}" required>
                 <button type="button" class="remove-item-btn" onclick="this.parentElement.remove()">✕</button>
             `;
+
+            if (type === 'video' || type === 'audio') {
+                const helpText = document.createElement('small');
+                helpText.style.color = 'rgba(255, 255, 255, 0.7)';
+                helpText.style.marginTop = '5px';
+                helpText.style.display = 'block';
+                helpText.textContent = "Al abrir, solo haz clic en 'Abrir el documento directamente'";
+                itemDiv.querySelector('input').insertAdjacentElement('afterend', helpText);
+            }
+
             container.appendChild(itemDiv);
         }
 
         // Generar enlace
         document.getElementById('generator-form').addEventListener('submit', async function(e) {
             e.preventDefault();
+            
             const generateButton = document.getElementById('generate-button');
             const resultSection = document.getElementById('generator-result');
+            const resultContent = document.getElementById('generator-result-content');
             
-            const recipientName = document.getElementById('recipient-name-gen').value;
+            const formData = new FormData(e.target);
+            const recipientName = formData.get('recipient_name');
             const isKit = document.getElementById('is-kit').checked;
-            const items = Array.from(document.querySelectorAll('#items-container .item')).map(item => ({
-                type: item.dataset.type,
-                url: item.querySelector('input').value.trim()
-            })).filter(item => item.url);
-
-            if (!recipientName || items.length === 0) {
-                showResult('generator', 'error', '❌ Error', 'El nombre del receptor y al menos un componente son obligatorios.');
+            
+            const items = [];
+            document.querySelectorAll('#items-container .item').forEach(item => {
+                const type = item.dataset.type;
+                const url = item.querySelector('input').value.trim();
+                if (url) {
+                    items.push({ type, url });
+                }
+            });
+            
+            if (!recipientName) {
+                showResult('generator', 'error', '❌ Error', 'El nombre del receptor es obligatorio');
                 return;
             }
-
+            
+            if (items.length === 0) {
+                showResult('generator', 'error', '❌ Error', 'Debes añadir al menos un componente de regalo');
+                return;
+            }
+            
             generateButton.disabled = true;
             generateButton.innerHTML = '<span class="loading"></span>Generando enlace...';
             resultSection.style.display = 'none';
-
+            
             try {
                 const response = await fetch(`${API_BASE_URL}/generate-link`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        recipient_name: recipientName,
-                        is_kit: isKit,
-                        items: items
-                    })
+                    body: JSON.stringify({ recipient_name: recipientName, is_kit: isKit, items: items })
                 });
                 
                 const result = await response.json();
                 
                 if (result.success) {
                     generatedLink = result.url;
+                    let resultButtons = '<button class="copy-button" onclick="copyGeneratedLink()">📋 Copiar Enlace</button>
+                                         <button class="copy-button" onclick="useInSender()" style="margin-left: 10px;">📧 Usar para Enviar</button>';
+
+                    const firstItemType = items[0] ? items[0].type : '';
+
+                    if (firstItemType === 'storybook') {
+                        resultButtons = `<a href="${result.url}" target="_blank" class="copy-button">📖 Leer Storybook</a>` + resultButtons;
+                    } else if (firstItemType === 'link') {
+                        resultButtons = `<a href="${result.url}" target="_blank" class="copy-button">🔗 Visitar Enlace</a>` + resultButtons;
+                    }
+
                     showResult('generator', 'success', '🎉 ¡Enlace generado exitosamente!', `
                         <div style="margin-bottom: 15px;">El enlace para <strong>${recipientName}</strong> está listo:</div>
                         <div class="generated-link">${result.url}</div>
-                        <button class="copy-button" onclick="copyGeneratedLink()">📋 Copiar Enlace Acortado</button>
-                        <button class="copy-button" onclick="useInSender()" style="margin-left: 10px;">📧 Usar para Enviar</button>
+                        ${resultButtons}
                     `);
                 } else {
                     showResult('generator', 'error', '❌ Error al generar enlace', result.message);
@@ -304,21 +635,19 @@
         // Enviar regalo
         document.getElementById('sender-form').addEventListener('submit', async function(e) {
             e.preventDefault();
+            
             const sendButton = document.getElementById('send-button');
             const resultSection = document.getElementById('sender-result');
+            const resultContent = document.getElementById('sender-result-content');
             
-            const orderId = document.getElementById('order-id').value.trim();
+            const formData = new FormData(e.target);
             const giftData = {
-                recipient_name: document.getElementById('recipient-name-send').value,
-                recipient_email: document.getElementById('recipient-email').value,
-                sender_name: document.getElementById('sender-name').value,
-                gift_url: document.getElementById('gift-url').value
+                recipient_name: formData.get('recipient_name'),
+                recipient_email: formData.get('recipient_email'),
+                sender_name: formData.get('sender_name'),
+                gift_url: formData.get('gift_url')
             };
-
-            if (orderId) {
-                giftData.order_id = orderId;
-            }
-
+            
             sendButton.disabled = true;
             sendButton.innerHTML = '<span class="loading"></span>Enviando regalo...';
             resultSection.style.display = 'none';
@@ -355,9 +684,11 @@
         // Funciones auxiliares
         function showResult(section, type, title, message) {
             const resultSection = document.getElementById(section + '-result');
+            const resultContent = document.getElementById(section + '-result-content');
+            
             resultSection.style.display = 'block';
             resultSection.className = `result-section result-${type}`;
-            resultSection.innerHTML = `
+            resultContent.innerHTML = `
                 <div style="font-size: 1.2em; margin-bottom: 10px;">${title}</div>
                 <div>${message}</div>
             `;
@@ -370,10 +701,7 @@
                     const shortenResponse = await fetch(`${API_BASE_URL}/shorten-url`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            url: generatedLink,
-                            recipient_name: recipientName
-                        })
+                        body: JSON.stringify({ url: generatedLink, recipient_name: recipientName })
                     });
                     
                     const shortenResult = await shortenResponse.json();
@@ -381,17 +709,17 @@
                     
                     navigator.clipboard.writeText(urlToCopy).then(() => {
                         const message = shortenResult.success 
-                            ? '¡Enlace acortado y copiado al portapapeles!' 
-                            : '¡Enlace original copiado al portapapeles!';
+                            ? '¡Enlace acortado copiado al portapapeles!' 
+                            : '¡Enlace copiado al portapapapeles!';
                         alert(message);
-                    }, () => {
-                        alert('Error al copiar el enlace. Por favor, cópialo manually.');
+                    }, (err) => {
+                        alert('Error al copiar el enlace. Por favor, cópialo manualmente.');
                     });
                     
                 } catch (error) {
                     navigator.clipboard.writeText(generatedLink).then(() => {
-                        alert('Error al acortar, ¡enlace original copiado al portapapeles!');
-                    }, () => {
+                        alert('¡Enlace copiado al portapapeles!');
+                    }, (err) => {
                         alert('Error al copiar el enlace. Por favor, cópialo manualmente.');
                     });
                 }
@@ -410,7 +738,18 @@
             }
         }
 
+        function showExitIntent() {
+            alert("¡No te vayas! Considera dejarnos una reseña si te ha gustado la aplicación.");
+        }
+
+        document.addEventListener('mouseleave', function(e) {
+            if (e.clientY < 0) {
+                showExitIntent();
+            }
+        });
+
         window.addEventListener('load', checkHealth);
     </script>
 </body>
 </html>
+
