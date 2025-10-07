@@ -51,7 +51,7 @@ class LinkGenerator:
             return False, "", "URL no puede estar vacía"
         
         # Para archivos de Google Drive, extraer el ID
-                if item_type in ['video', 'audio', 'pdf', 'storybook']:
+        if item_type in ['video', 'audio', 'pdf']:
             drive_id = LinkGenerator.extract_google_drive_id(url)
             if not drive_id:
                 return False, "", f"El enlace para {item_type.upper()} no parece ser un enlace válido de Google Drive"
